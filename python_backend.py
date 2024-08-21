@@ -12,7 +12,7 @@ celery.conf.update(app.config)
 # Initialize the Gradio client with your specified model
 client = Client("Lakshay1Dagar/Facial_Defect_Detector_with_Fruit_Recommendation")
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST','GET'])
 def predict():
     data = request.args
     task = predict_later.apply_async(args=[data])
