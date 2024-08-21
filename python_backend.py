@@ -3,27 +3,35 @@ from gradio_client import Client, handle_file
 
 app = Flask(__name__)
 
-client = Client("https://a9dcb184b0b833f4e6.gradio.live")
+# Initialize the Gradio client with your specified model
+client = Client("Lakshay1Dagar/Facial_Defect_Detector_with_Fruit_Recommendation")
 
-@app.route('/predict_hair', methods=['POST', 'GET'])
-def predict_hair():
-    if request.method == 'GET':
-        hair_image_url = request.args.get('hair_image_url')
-    else:
-        if 'hair_image_url' not in request.json:
-            return jsonify({'error': 'No image URL provided'}), 400
-        hair_image_url = request.json['hair_image_url']
+@app.route('/predict', methods=['POST','GET'])
+def predict():
+    # Extract the required parameters from the incoming request
+    data = request.json
 
-    if not hair_image_url:
-        return jsonify({'error': 'No image URL provided'}), 400
+    # Validate and retrieve the necessary parameters
+    age = data.get('age')
+    gender = data.get('gender')
+    face_image_url = data.get('face_image_url')
+    hair_image_url = data.get('hair_image_url')
+
+    if not age or not gender or not face_image_url or not hair_image_url:
+        return jsonify({'error': 'Missing required parameters'}), 400
 
     try:
+        # Use the Gradio client to make a prediction
         result = client.predict(
-            img_hair=handle_file(hair_image_url),
-            api_name="/predict_hair"
+            age=age,
+            gender=gender,
+            face_image_pred=handle_file(face_image_url),
+            hair_image_pred=handle_file(hair_image_url),
+            api_name="/predict"
         )
-        print(result)
+
         return jsonify({'result': result}), 200
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
