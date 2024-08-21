@@ -1,1 +1,2 @@
-web: gunicorn python_backend:app
+web: gunicorn -w 4 -b 0.0.0.0:8000 --timeout 1200 python_backend:app
+
