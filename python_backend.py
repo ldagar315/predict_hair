@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Initialize the Gradio client with your specified model
 client = Client("https://52cb880ca530111adb.gradio.live")
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST','GET'])
 def predict():
     # Extract the required parameters from the incoming request
     data = request.args
