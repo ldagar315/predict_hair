@@ -25,8 +25,8 @@ def predict():
         result = client.predict(
             age=age,
             gender=gender,
-            face_image_pred=handle_file(face_image_url),
-            hair_image_pred=handle_file(hair_image_url),
+            face_image=handle_file(face_image_url),
+            hair_image=handle_file(hair_image_url),
             api_name="/predict"
         )
 
