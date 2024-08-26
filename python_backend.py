@@ -36,7 +36,7 @@ def predict():
             activity_lvl = activity_lvl,
             goal = goal, 
             medical_cond = medical_cond,
-            smoking_status = smoking_status
+            smoking_status = smoking_status,
             face_image=handle_file(face_image_url),
             hair_image=handle_file(hair_image_url),
             api_name="/predict"
