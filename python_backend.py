@@ -23,7 +23,7 @@ def predict():
     face_image_url = data.get('face_image_url')
     hair_image_url = data.get('hair_image_url')
 
-    if not age or not gender or not or not aqi or not location or not goal or not medical_cond or not smoking_status or not face_image_url or not hair_image_url:
+    if not age or not gender or not aqi or not location or not goal or not activity_lvl or not medical_cond or not smoking_status or not face_image_url or not hair_image_url:
         return jsonify({'error': 'Missing required parameters'}), 400
 
     try:
