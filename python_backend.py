@@ -4,7 +4,7 @@ from gradio_client import Client, handle_file
 app = Flask(__name__)
 
 # Initialize the Gradio client with your specified model
-client = Client("https://7c52857bc931c54613.gradio.live")
+client = Client("Lakshay1Dagar/Facial_Defect_Detector_with_Fruit_Recommendation")
 
 @app.route('/predict', methods=['POST','GET'])
 def predict():
