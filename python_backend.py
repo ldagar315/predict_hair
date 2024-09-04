@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from gradio_client import Client, handle_file
 import google.generativeai as genai
+import typing_extensions as typing
 import os
 import json
 
