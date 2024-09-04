@@ -1,34 +1,17 @@
 from flask import Flask, request, jsonify
 from gradio_client import Client, handle_file
 import google.generativeai as genai
-import typing_extensions as typing
 import os
 import json
 
-class FruitDetails(typing.TypedDict):
-    name: str
-    dosage: str
-    benefits: str
-
-class DayPlan(typing.TypedDict):
-    fruits: dict[str, FruitDetails]
-
-class WeeklyFruitPlan(typing.TypedDict):
-    Monday: DayPlan
-    Tuesday: DayPlan
-    Wednesday: DayPlan
-    Thursday: DayPlan
-    Friday: DayPlan
-    Saturday: DayPlan
-    Sunday: DayPlan
 
 
 genai.configure(api_key= 'AIzaSyApz-2HGHovDuwzOPCQLqIEhMXNaYgXuyU')
 
 model_json = genai.GenerativeModel('gemini-1.5-pro', 
                               generation_config= {
-                                  "response_mime_type": "application/json",
-                                  "response_schema": WeeklyFruitPlan
+                                  "response_mime_type": "application/json"
+                            
                                   
                               })
 
@@ -90,7 +73,7 @@ def predict():
         face_pred = result[0]['label']
         hair_pred = result[1]['label']
         content = f''' You a game character that is expert nutritionist, You have to design a personalised weekly fruit consumption plan for the the main character
-        that has the following stats. 
+        with the following parameters. 
         age : {age}
         gender : {gender}
         aqi : {aqi}, consider this for the pollution severity
@@ -101,8 +84,9 @@ def predict():
         Smoking / Alcohol Consumption : {smoking_status}
         Defects on face : {face_pred} on face
         Hair Health : {hair_pred} on Norwood scale
-        Use this JSON schema:
+        Output the result in this JSON schema:
          FruitPlan = {output}
+        Return a tuple(FruitPlan)
         '''
         response = model_json.generate_content(content)
         json_response = json.loads(response.text)
