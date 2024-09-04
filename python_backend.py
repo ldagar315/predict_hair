@@ -4,12 +4,30 @@ import google.generativeai as genai
 import os
 import json
 
+class FruitDetails(typing.TypedDict):
+    name: str
+    dosage: str
+    benefits: str
+
+class DayPlan(typing.TypedDict):
+    fruits: dict[str, FruitDetails]
+
+class WeeklyFruitPlan(typing.TypedDict):
+    Monday: DayPlan
+    Tuesday: DayPlan
+    Wednesday: DayPlan
+    Thursday: DayPlan
+    Friday: DayPlan
+    Saturday: DayPlan
+    Sunday: DayPlan
+
 
 genai.configure(api_key= 'AIzaSyApz-2HGHovDuwzOPCQLqIEhMXNaYgXuyU')
 
 model_json = genai.GenerativeModel('gemini-1.5-pro', 
                               generation_config= {
-                                  "response_mime_type": "application/json"
+                                  "response_mime_type": "application/json",
+                                  "response_schema": WeeklyFruitPlan
                                   
                               })
 
@@ -70,9 +88,8 @@ def predict():
 
         face_pred = result[0]['label']
         hair_pred = result[1]['label']
-        content = f''' You a game character that is expert nutritionist, You have to design weekly fruit consumption plan for the the main character
-        that has the following stats. Chart a weekly plan in the format specified below. Choose fruits from the list below
-        you can repeat the fruits as well and can suggest more than one fruit. Remember to make it personlised for the character based on the following stats
+        content = f''' You a game character that is expert nutritionist, You have to design a personalised weekly fruit consumption plan for the the main character
+        that has the following stats. 
         age : {age}
         gender : {gender}
         aqi : {aqi}, consider this for the pollution severity
@@ -82,15 +99,14 @@ def predict():
         medical condition : {medical_cond}, consider this for only for better recommnedations not for allergen / harm / side effects
         Smoking / Alcohol Consumption : {smoking_status}
         Defects on face : {face_pred} on face
-        Hair Health : {hair_pred} 
+        Hair Health : {hair_pred} on Norwood scale
         Use this JSON schema:
          FruitPlan = {output}
-        Return a 'list[FruitPlan]'
         '''
         response = model_json.generate_content(content)
-        response = json.loads(response.text)
+        json_response = json.loads(response.text)
 
-        return jsonify({'result': result[:2], 'gen_ai_response': response}), 200
+        return jsonify({'result': result, 'gen_ai_response': json_response}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
