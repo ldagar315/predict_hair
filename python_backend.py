@@ -88,7 +88,7 @@ def predict():
         '''
         response = model_json.generate_content(content)
 
-        return jsonify({'result': result[:2], 'gen_ai_response': response}), 200
+        return jsonify({'result': result[:2], 'gen_ai_response': response.text}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
