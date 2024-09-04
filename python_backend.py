@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from gradio_client import Client, handle_file
 import google.generativeai as genai
 import os
+import json
 
 
 genai.configure(api_key= 'AIzaSyApz-2HGHovDuwzOPCQLqIEhMXNaYgXuyU')
@@ -87,8 +88,9 @@ def predict():
         Return a 'list[FruitPlan]'
         '''
         response = model_json.generate_content(content)
+        response = json.loads(response.text)
 
-        return jsonify({'result': result[:2], 'gen_ai_response': response.text}), 200
+        return jsonify({'result': result[:2], 'gen_ai_response': response}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
