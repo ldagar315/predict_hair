@@ -40,7 +40,7 @@ output = { "Monday" :
 
 def get_fruits_benefits(json_response):
   unique_fruits = []
-  unique_fruits_json = []
+  my_dict = {}
   for i in json_response:
     for j in json_response[i]['fruits']:
       if json_response[i]['fruits'][j]['name'] not in unique_fruits:
@@ -48,8 +48,34 @@ def get_fruits_benefits(json_response):
         unique_fruits.append(json_response[i]['fruits'][j]['name'])
         my_dict['fruit'] = json_response[i]['fruits'][j]['name']
         my_dict['benefit'] = json_response[i]['fruits'][j]['benefits']
+        try :
+          my_dict['image'] = fruit_images[json_response[i]['fruits'][j]['name']]
+        except KeyError:
+          continue
         unique_fruits_json.append(my_dict)
-  return unique_fruits_json           
+  return unique_fruits_json   
+
+fruit_images = {
+    'Apple' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fred-apple-leaf-slice-white-background-29914331.jpg?alt=media&token=ba699af7-d101-48e2-a02a-90e8d2b7f48d',
+    'Banana' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FBANANA-PDP.jpg_1723792764773.jpg?alt=media&token=258567ef-58b3-40ca-aa89-f5bdb0be0642',
+    'Guava' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FGuvava.jpg?alt=media&token=561d9d28-65e7-4ffd-8c25-855e9eceb111',
+    'Pear' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FIndianPear(Babugosha)-pdp.jpg_1724045690263.jpg?alt=media&token=7beceb25-24b6-4d73-8e5d-fc6e676a7d60',
+    'Kiwi' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FKIWIGREEN-pdp.jpg_1723792814093.jpg?alt=media&token=abc40cca-ba9e-4ee3-82cd-d9e4a3edbf29',
+    'Mango' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FMangoBanganapalli-PDP.jpg_1723792993796.jpg?alt=media&token=8728f207-306f-449c-b279-56c21c522365',
+    'Papaya' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FPAPAYARIPE-pdp.jpg_1723792868072.jpg?alt=media&token=fadfaa71-a56d-4a1e-aa1d-3f2425669c8f',
+    'Pomegranate' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FPOMEGRANATE-pdp.jpg_1723792901263.jpg?alt=media&token=8578e8cb-87af-4a8f-b0ad-f2fa33eb9718',
+    'Watermelon' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FWATERMELON-pdp.jpg_1723792942607.jpg?alt=media&token=e0ac1ea0-1c47-4fcf-af2f-5a3c028cbe3d',
+    'Avacado' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Favacado.jpg?alt=media&token=bc589e7f-1748-4bbc-bc10-395a69faa1ec',
+    'Dragon Fruit' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fdragon%20fruit.jpg?alt=media&token=cc997868-107e-45ee-a38b-0499efdb77ba',
+    'Grapes' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fgrapes.jpg?alt=media&token=05236b75-ee8c-442b-b5d9-f18af2a6b3c7',
+    'Muskmelon' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fmuskmelon.jpg?alt=media&token=b4988333-a270-4747-af1e-29b463533fd9',
+    'Orange' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Forange.jpg?alt=media&token=a71d976a-d6ec-43cb-bfa7-6cd350f2c319',
+    'Peach' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fpeach.jpg?alt=media&token=834c9551-2154-46c3-981e-707c3a7da514',
+    'Pineapple' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fpineapple.jpg?alt=media&token=8571b9f4-084c-4a21-8aaf-053074289930',
+    'Plum' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fplum.jpg?alt=media&token=87c2928d-415a-4c52-b971-bda2f64555f8',
+    'Berries (Mix)' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2FBlackberry.jpg?alt=media&token=c9e1fcce-c307-416b-9e4c-2b1dfc22d464',
+    'MuskMelon (Kharbooja)' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fmuskmelon.jpg?alt=media&token=b4988333-a270-4747-af1e-29b463533fd9'
+}
 
 app = Flask(__name__)
 
