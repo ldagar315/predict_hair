@@ -40,7 +40,7 @@ output = { "Monday" :
 
 def get_fruits_benefits(json_response):
   unique_fruits = []
-  unique_fruit_json = []
+  unique_fruits_json = []
   for i in json_response:
     for j in json_response[i]['fruits']:
       if json_response[i]['fruits'][j]['name'] not in unique_fruits:
