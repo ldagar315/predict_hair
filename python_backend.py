@@ -37,6 +37,17 @@ output = { "Monday" :
         
 
      }}}
+
+def get_fruits_benefits(json_response):
+  unique_fruits = []
+  my_dict = {}
+  for i in json_response:
+    for j in json_response[i]['fruits']:
+      if json_response[i]['fruits'][j]['name'] not in unique_fruits:
+        unique_fruits.append(json_response[i]['fruits'][j]['name'])
+        my_dict[json_response[i]['fruits'][j]['name']] = json_response[i]['fruits'][j]['benefits']
+  return my_dict    
+
 app = Flask(__name__)
 
 # Initialize the Gradio client with your specified model
@@ -90,8 +101,9 @@ def predict():
         '''
         response = model_json.generate_content(content)
         json_response = json.loads(response.text)
+        fruit_benefits = get_fruits_benefits(json_response)
 
-        return jsonify({'result': result, 'gen_ai_response': json_response}), 200
+        return jsonify({'result': result, 'gen_ai_response': json_response,'fruit_benefits':fruit_benefits}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
