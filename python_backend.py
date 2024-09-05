@@ -40,13 +40,16 @@ output = { "Monday" :
 
 def get_fruits_benefits(json_response):
   unique_fruits = []
-  my_dict = {}
+  unique_fruits_json = []
   for i in json_response:
     for j in json_response[i]['fruits']:
       if json_response[i]['fruits'][j]['name'] not in unique_fruits:
+        my_dict = {}
         unique_fruits.append(json_response[i]['fruits'][j]['name'])
-        my_dict[json_response[i]['fruits'][j]['name']] = json_response[i]['fruits'][j]['benefits']
-  return my_dict    
+        my_dict['fruit'] = json_response[i]['fruits'][j]['name']
+        my_dict['benefit'] = json_response[i]['fruits'][j]['benefits']
+        unique_fruits_json.append(my_dict)
+  return unique_fruits_json           
 
 app = Flask(__name__)
 
