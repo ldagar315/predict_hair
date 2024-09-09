@@ -84,7 +84,7 @@ client = Client("Lakshay1Dagar/facial_defect_detector")
 
 @app.route('/'):
 def running():
-  return 'This is server is live and running
+    return 'This is server is live and running'
 
 @app.route('/predict', methods=['POST','GET'])
 def predict():
