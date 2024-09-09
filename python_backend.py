@@ -82,6 +82,10 @@ app = Flask(__name__)
 # Initialize the Gradio client with your specified model
 client = Client("Lakshay1Dagar/facial_defect_detector")
 
+@app.route('/'):
+def running():
+  return 'This is server is live and running
+
 @app.route('/predict', methods=['POST','GET'])
 def predict():
     # Extract the required parameters from the incoming request
