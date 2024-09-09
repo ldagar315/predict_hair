@@ -82,7 +82,7 @@ app = Flask(__name__)
 # Initialize the Gradio client with your specified model
 client = Client("Lakshay1Dagar/facial_defect_detector")
 
-@app.route('/'):
+@app.route('/')
 def running():
     return 'This is server is live and running'
 
