@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from gradio_client import Client, handle_file
+from flask_cors import CORS
 import google.generativeai as genai
 import os
 import json
@@ -77,16 +78,17 @@ fruit_images = {
     'MuskMelon (Kharbooja)' : 'https://firebasestorage.googleapis.com/v0/b/facial-gen-ai-fruit-recom.appspot.com/o/fruit_images%2Fmuskmelon.jpg?alt=media&token=b4988333-a270-4747-af1e-29b463533fd9'
 }
 
-app = Flask(__name__)
+application = Flask(__name__)
+CORS(application) 
 
 # Initialize the Gradio client with your specified model
 client = Client("Lakshay1Dagar/facial_defect_detector")
 
-@app.route('/')
+@application.route('/')
 def running():
     return 'This is server is live and running'
 
-@app.route('/predict', methods=['POST','GET'])
+@application.route('/predict', methods=['POST','GET'])
 def predict():
     # Extract the required parameters from the incoming request
     data = request.args
@@ -121,7 +123,7 @@ def predict():
         age : {age}
         gender : {gender}
         aqi : {aqi}, consider this for the pollution severity
-        location : {location}, consider this for the fruit availablity
+        location : {location}, consider this for the fruit seasonlity
         activity level : {activity_lvl}
         goal : {goal}
         medical condition : {medical_cond}, consider this for only for better recommnedations not for allergen / harm / side effects
@@ -142,5 +144,6 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run(debug=True)
+
 
